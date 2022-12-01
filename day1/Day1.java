@@ -6,12 +6,13 @@ public class Day1 {
     public static void main(String[] args) {
 
         int maxCalories = 0;
+        int secondMaxCalories = 0;
+        int thirdMaxCalories = 0;
         int currentCalories = 0;
 
         // read input from input.txt
         try {
             Scanner in = new Scanner(new File("input.txt"));
-            
             
             // read line by line
             while (in.hasNextLine()) {
@@ -19,10 +20,16 @@ public class Day1 {
                 String line = in.nextLine();
                 // if next line is blank
                 if (line.equals("")) {
-                    // if current calories is greater than max calories
+                    // update max calories, second max calories, and third max calories
                     if (currentCalories > maxCalories) {
-                        // set max calories to current calories
+                        thirdMaxCalories = secondMaxCalories;
+                        secondMaxCalories = maxCalories;
                         maxCalories = currentCalories;
+                    } else if (currentCalories > secondMaxCalories) {
+                        thirdMaxCalories = secondMaxCalories;
+                        secondMaxCalories = currentCalories;
+                    } else if (currentCalories > thirdMaxCalories) {
+                        thirdMaxCalories = currentCalories;
                     }
                     // reset current calories
                     currentCalories = 0;
@@ -36,6 +43,12 @@ public class Day1 {
         }
 
         // print out result
-        System.out.println(maxCalories);
+        System.out.println("Max Calories: " + maxCalories);
+        System.out.println("Second Max Calories: " + secondMaxCalories);
+        System.out.println("Third Max Calories: " + thirdMaxCalories);
+
+        int combinedCalories = maxCalories + secondMaxCalories + thirdMaxCalories;
+        System.out.println("Top 3 Combined Calories: " + combinedCalories);
+
     }
 }
